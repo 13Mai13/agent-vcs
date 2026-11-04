@@ -5,3 +5,4 @@ pub mod changeset;
 pub mod diff;
 pub mod log;
 pub mod object;
+pub mod repo;
