@@ -7,7 +7,6 @@ name = "agent-vcs"
 version = "0.1.0"
 dependencies = [
  "sha2",
- "sha_256",
 ]
 
 [[package]]
@@ -85,12 +84,6 @@ dependencies = [
  "cpufeatures",
  "digest",
 ]
-
-[[package]]
-name = "sha_256"
-version = "1.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "67aa05c520a4a52e76d716c5e1fa67fb132d16df779b6479014e40b1aa16e921"
 
 [[package]]
 name = "typenum"
