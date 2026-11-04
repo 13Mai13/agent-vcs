@@ -1,0 +1,15 @@
+[package]
+name = "agent-vcs"
+version = "0.1.0"
+edition = "2021"
+description = "Agent-scale source control from scratch, inspired by Anthropic's Scion"
+
+[[bin]]
+name = "avcs"
+path = "src/bin/avcs.rs"
+
+[[bin]]
+name = "avcs-server"
+path = "src/bin/avcs-server.rs"
+
+[dependencies]
