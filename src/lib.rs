@@ -6,3 +6,4 @@ pub mod diff;
 pub mod log;
 pub mod object;
 pub mod repo;
+pub mod service;
