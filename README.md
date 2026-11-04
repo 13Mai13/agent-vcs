@@ -2,7 +2,7 @@
 
 Source control for a world where most clients are agents, built from scratch in Rust. Inspired by Anthropic's [Redesigning source control](https://www.anthropic.com/research/redesigning-source-control) (Scion).
 
-Is a fun project to understand in depth how git works, by trying to implement the same functionalities in a completelly different paradigm.
+It's a fun project to understand in depth how git works, by trying to implement the same functionalities in a completely different paradigm.
 
 ## Where we are
 
