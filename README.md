@@ -1,45 +1,24 @@
 # agent-vcs
 
-A fun side project: source control for a world where most clients are agents, built from scratch in Rust. Inspired by Anthropic's [Redesigning source control](https://www.anthropic.com/research/redesigning-source-control) (Scion).
+Source control for a world where most clients are agents, built from scratch in Rust. Inspired by Anthropic's [Redesigning source control](https://www.anthropic.com/research/redesigning-source-control) (Scion).
 
-Status: just started. Nothing works yet.
+Is a fun project to understand in depth how git works, by trying to implement the same functionalities in a completelly different paradigm.
 
-## The idea
+## Where we are
 
-Git assumes every client is offline and keeps a full copy. Agents and CI jobs are always online, so flip it:
+Nothing works yet. There's a design: [PRD](docs/prd.md), [architecture](docs/architecture.md), [glossary](GLOSSARY.md) and [decisions](docs/adr/).
 
-- **No full copy anywhere.** Data is content-addressed: every blob is stored under its hash.
-- **The server does the work.** Commits, merges, history and blame happen on the server. There's nothing to push.
-- **The log is the source of truth.** Each change is a changeset appended to a write-ahead log. A changeset stores only what changed.
-- **Derived data.** File history and blame are built from the log, eagerly or lazily.
-- **Thin client.** `avcs` asks the server questions. The working copy is optional and sparse.
+## Where we want to be
 
-## Layout
+A server on my homelab that humans and agents commit to over gRPC. It has no local history, no full copies, and the server does the work. Done when I use it on one real repo of mine.
 
-```
-src/lib.rs             object store, changeset, WAL, derived data
-src/bin/avcs.rs        client CLI
-src/bin/avcs-server.rs server
-```
-
-## Roadmap (v0)
-
-- [ ] Object store: put and get blobs by hash, on disk
-- [ ] Changeset: parent + changed paths -> blob hashes
-- [ ] WAL: append changesets, replay on start
-- [ ] Server: `put-blob`, `commit`, `log`, `cat <path>@<changeset>` over a socket
-- [ ] Client: `avcs commit`, `avcs log`, `avcs cat`
-- [ ] Derived data: file history for a path
-- [ ] Sparse checkout: fetch only the paths you ask for
-
-## Not goals
-
-Offline work, git compatibility, scale beyond my homelab.
-
-## Run
+## How to start
 
 ```bash
+brew install rustup && rustup default stable   # then add /opt/homebrew/opt/rustup/bin to PATH
 cargo build
 cargo run --bin avcs-server
 cargo run --bin avcs
 ```
+
+Then pick the next unchecked item in [Phase 0](docs/prd.md#phase-0-the-core-no-network).
