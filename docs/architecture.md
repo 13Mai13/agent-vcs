@@ -109,7 +109,7 @@ It parses args, calls `RepoService` and prints text or `--json`. Its own logic i
 
 ## Testing
 
-The interface is the test surface:
+The interface is the test surface. Tests go in `tests/` and use only the public interface; same-file unit tests are the exception, for private helpers.
 
 - **The behaviour suite runs against `RepoService`**, both adapters:
   - commit then read
