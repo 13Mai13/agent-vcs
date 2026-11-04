@@ -135,11 +135,11 @@ src/
   log.rs                Log
   changeset.rs          Changeset, Changes, Meta, Rev
   diff.rs               Myers
+  repo.rs               Repo, Server
   repo/
-    mod.rs              Repo, Server
     derived.rs          Derived + adapters
+  service.rs            RepoService port
   service/
-    mod.rs              RepoService port
     local.rs            in-process adapter (tests)
     grpc.rs             gRPC client + server adapter
   bin/
