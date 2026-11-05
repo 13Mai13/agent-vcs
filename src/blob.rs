@@ -1,4 +1,4 @@
-//! ObjectStore: blobs stored by blob ID (git blob format, SHA-256). See ADR 0007.
+//! BlobStore: blobs stored by blob ID (git blob format, SHA-256). See ADR 0007.
 use sha2::{Digest, Sha256}; // brings what Cargo.toml has, no need to do sha2::SHA-256
 // Digest is the trait (kind of an interface)
 pub struct BlobId([u8; 32]); // 32 bytes, inline: no heap allocationlowlevel

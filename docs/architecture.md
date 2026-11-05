@@ -13,9 +13,9 @@ How agent-vcs is put together, in the vocabulary of deep modules: **module**, **
  │        │         │    token, stream   │        ▼                          │
  │  RepoService ────┼──── (port) ───────►│  ┌─────────────────────────────┐  │
  │  (gRPC adapter)  │                    │  │ Repo  (the deep module)     │  │
- └──────────────────┘                    │  │  ┌──────┐ ┌─────────────┐   │  │
-                                         │  │  │ Log  │ │ ObjectStore │   │  │
-                                         │  │  └──────┘ └─────────────┘   │  │
+ └──────────────────┘                    │  │  ┌──────┐ ┌───────────┐     │  │
+                                         │  │  │ Log  │ │ BlobStore │     │  │
+                                         │  │  └──────┘ └───────────┘     │  │
                                          │  │  ┌───────────────────────┐  │  │
                                          │  │  │ derived data (memory) │  │  │
                                          │  │  └───────────────────────┘  │  │
@@ -57,7 +57,7 @@ Why it's deep: callers learn nine methods. Behind them sit conflict detection, r
 
 A `Server` holds `name → Repo` for many repos ([PRD](prd.md#features-v0): `init`).
 
-### `ObjectStore`: blobs by content
+### `BlobStore`: blobs by content
 
 `put(bytes) -> BlobId`, `get(id) -> bytes`, `has(id)`. The ID is git's blob hash with SHA-256 ([ADR 0007](adr/0007-git-format-sha256-blobs.md)). Writing the same bytes twice is a no-op. Files live at `blobs/ab/cdef…`.
 
@@ -68,7 +68,7 @@ A `Server` holds `name → Repo` for many repos ([PRD](prd.md#features-v0): `ini
 
 `append(bytes) -> Rev`, `replay()`. Each record is `[len][checksum][bytes]`, and `append` fsyncs before returning. `replay` drops a torn last record instead of failing. `Log` only stores bytes; `Repo` decides what a changeset means ([ADR 0008](adr/0008-plain-files-own-wal.md)).
 
-- **Dependency and seam:** the same as `ObjectStore`.
+- **Dependency and seam:** the same as `BlobStore`.
 
 ### Derived data: an internal seam with real variation
 
@@ -123,7 +123,7 @@ The interface is the test surface. Tests go in `tests/` and use only the public 
 - **Blob IDs:** checked against `git hash-object` in a SHA-256 git repo.
 - **CLI:** a few end-to-end tests against a real server on localhost.
 
-There are no isolated tests for `ObjectStore`, `Log` or derived data unless a bug needs one.
+There are no isolated tests for `BlobStore`, `Log` or derived data unless a bug needs one.
 
 ## Source layout
 
@@ -131,7 +131,7 @@ There are no isolated tests for `ObjectStore`, `Log` or derived data unless a bu
 proto/avcs.proto        API spec
 src/
   lib.rs
-  object.rs             ObjectStore, BlobId
+  blob.rs               BlobStore, BlobId
   log.rs                Log
   changeset.rs          Changeset, Changes, Meta, Rev
   diff.rs               Myers

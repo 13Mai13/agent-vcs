@@ -59,7 +59,7 @@ Offline work, git compatibility on the wire, branches and merges, multiple serve
 
 Everything behind `Repo`, tested in-process.
 
-- [ ] `ObjectStore`: put and get blobs by git-format SHA-256 ID, on disk
+- [ ] `BlobStore`: put and get blobs by git-format SHA-256 ID, on disk
 - [ ] `Log`: append checksummed records with fsync, replay on open, drop a torn last record
 - [ ] `Repo::commit` and `read` on a single trunk, with revision numbers
 - [ ] Conflict detection and server-side rebase

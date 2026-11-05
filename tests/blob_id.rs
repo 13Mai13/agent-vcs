@@ -1,4 +1,4 @@
-use agent_vcs::object::BlobId;
+use agent_vcs::blob::BlobId;
 
 #[test]
 fn blob_id_matches_git_for_hello() {
