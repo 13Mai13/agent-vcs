@@ -59,7 +59,7 @@ A `Server` holds `name → Repo` for many repos ([PRD](prd.md#features-v0): `ini
 
 ### `ObjectStore`: blobs by content
 
-`put(bytes) -> BlobId`, `get(id) -> bytes`, `has(id)`. The ID is git's blob hash with SHA-256 ([ADR 0007](adr/0007-git-format-sha256-blobs.md)). Writing the same bytes twice is a no-op. Files live at `objects/ab/cdef…`.
+`put(bytes) -> BlobId`, `get(id) -> bytes`, `has(id)`. The ID is git's blob hash with SHA-256 ([ADR 0007](adr/0007-git-format-sha256-blobs.md)). Writing the same bytes twice is a no-op. Files live at `blobs/ab/cdef…`.
 
 - **Dependency:** the filesystem. It's *local-substitutable*, so tests use a temp dir.
 - **Seam:** internal to `Repo`. There's one adapter, so it's a plain struct, not a trait. A cache tier would be the second adapter that makes it a real seam.
