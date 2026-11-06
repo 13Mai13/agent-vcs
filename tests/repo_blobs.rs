@@ -16,3 +16,17 @@ fn stored_blob_is_no_longer_missing() {
     );
     assert_eq!(repo.missing(&[hello]), vec![]);
 }
+
+#[test]
+fn stored_blob_survives_reopen() {
+    let dir = tempfile::tempdir().unwrap();
+    let hello = BlobId::of(b"hello\n");
+
+    {
+        let repo = Repo::open(dir.path()).unwrap();
+        repo.put_blob(&b"hello\n"[..]).unwrap();
+    } // the first repo is dropped here
+
+    let reopened = Repo::open(dir.path()).unwrap();
+    assert_eq!(reopened.missing(&[hello]), vec![]);
+}
